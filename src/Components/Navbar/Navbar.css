@@ -1,0 +1,66 @@
+div.Navbar{
+    padding: 10px 40px 10px 40px;
+    background-color: #EC7272;
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    width: 100%;
+}
+
+div.Navbar .logo{
+    display: inline;
+    margin-right: 263px;
+}
+
+div.Navbar a{
+    text-decoration: none;
+    color:white;
+}
+
+div.Navbar .logo h2{
+    margin: 0px 0px 0px 0px;
+    display: inline;
+}
+
+div.Navbar form{
+    display: flex;
+}
+
+div.Navbar .search-bar{
+    margin-right: 100px;
+}
+
+div.Navbar .search-bar input{
+    width: 400px;
+    height: 36px;
+    border: none;
+}
+
+div.Navbar .search-bar button{
+    border: none;
+    height: 36px;
+    width: 65px;
+    background-color: white;
+}
+
+div.Navbar .search-bar .search-icon{
+    color: #EC7272;
+}
+
+div.Navbar .NavLinks{
+    display: inline;
+}
+
+div.Navbar .NavLinks ul{
+    list-style-type: none;
+    padding : 0px;
+    display: inline;
+}
+
+div.Navbar .NavLinks ul li{
+    display: inline;
+    color : white;  
+    margin-right: 20px;
+}

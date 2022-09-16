@@ -1,0 +1,52 @@
+div.container-fluid .row .gift-category{
+    border-right: 2px solid rgb(225, 62, 62);
+}
+
+div.container-fluid .row .gift-category .choose-gift {
+    padding: 20px 20px 20px 20px;
+    /* text-align: center; */
+}
+
+div.container-fluid .row .gift-category .choose-gift .price-filter{
+    margin-top: 85px;
+}
+
+div.container-fluid .row .gift-category .choose-gift h4{
+    text-align: center;
+}
+
+div.container-fluid .row .gift-category .choose-gift label{
+    margin-left: 10px;
+}
+
+div.container-fluid .row .gift-category .choose-gift input :nth-child(3){
+    margin-left: 10px;
+    margin-right: 0%;
+}
+
+div.gift-category .price-filter input{
+    width: 70px;
+    margin-right: 10px;
+    border: 1px solid #888C8C;
+    border-radius: 3px;
+    box-shadow : 0 1px 2px rgb(15 17 17 / 15%) inset;
+    outline: 0;
+    transition: 0.5ms;
+}
+
+div.gift-category .price-filter button{
+    color: black;
+    border: black;
+    box-shadow: 1px 2px 7px #888C8C;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
