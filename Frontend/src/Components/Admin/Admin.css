@@ -1,0 +1,8 @@
+div.admin-page{
+    margin-top: 10%;
+    margin-bottom: 10%;
+}
+
+div.admin-page form{
+    border: 3px solid black;
+}

@@ -1,0 +1,17 @@
+div.items-row .row{
+    width: 74%;
+    margin: 0 0 0 0;
+}
+
+div.product:hover{
+    box-shadow: 0px 5px 11px rgb(87, 87, 87);
+    transition: 0.3s;
+}
+
+div.row .my-item-cards{
+    margin-bottom: 50px;
+}
+
+div.row .my-item-cards .card-body{
+    text-align: center;
+}
