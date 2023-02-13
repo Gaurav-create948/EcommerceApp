@@ -6,16 +6,17 @@ import LocalMallIcon from "@mui/icons-material/LocalMall";
 import { useContextValue } from '../../Context/Context';
 
 function Navbar(props) {
-  const[{basket}, dispatch] = useContextValue();
+  // const[{basket}, dispatch] = useContextValue();
   return (
     <div className="Navbar">
       <div className="logo">
         <Link to={"/"}>
           {
             <strong>
-              <h2>
-                GITFT<i>lelo</i>
-              </h2>
+              {/* <h2> */}
+              {/* <img src="../../images/logo1.png" width={"100%"}></img> */}
+              djfdksj
+              {/* </h2> */}
             </strong>
           }
         </Link>
@@ -31,7 +32,7 @@ function Navbar(props) {
       <div className="NavLinks">
         <ul className="ul-list">
           <li>
-            <Link to="/signup">sign in</Link>
+            <Link to="/signup">Hello {props.name}</Link>
           </li>
           <li>
             <Link to="/my-orders">Orders</Link>
@@ -42,8 +43,9 @@ function Navbar(props) {
           <li>
             <Link to="/cart">
               <LocalMallIcon />
+              Cart
             </Link>
-            <span>{basket.length}</span>
+            {/* <span>{basket.length}</span> */}
           </li>
         </ul>
       </div>
