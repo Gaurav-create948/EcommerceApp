@@ -1,5 +1,5 @@
 import './signup.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -14,6 +14,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Navbar from '../Navbar/Navbar';
 
 function Copyright(props) {
   return (
@@ -38,7 +39,8 @@ export default function SignUp() {
         Phone: Number,
         Password: String
     });
-    
+
+    const [isSignIn, setIsSignIn] = useState(false);
     function handleChange(event) {
         const { name, value } = event.target;
         setValues(prevValues => {
@@ -68,10 +70,10 @@ export default function SignUp() {
             }
             if (name === "password") {
                 return {
-                    FullName: prevValues.FullName,
-                    Email: prevValues.Email,
-                    Phone: prevValues.Phone,
-                    Password: value
+                  FullName: prevValues.FullName,
+                  Email: prevValues.Email,
+                  Phone: prevValues.Phone,
+                  Password: value
                 }
             }
         });
@@ -80,9 +82,8 @@ export default function SignUp() {
     async function handleSubmit(event){
         event.preventDefault();
         const{FullName, Email, Phone, Password} = values;
-        console.log(FullName, Email, Phone, Password);
-        await fetch("http://localhost:5000/signin", {
-            method : "POST",
+        await fetch("http://localhost:5000/signup", {
+          method : "POST",
             headers : {
                 'Content-type' : 'application/json'
             },
@@ -93,16 +94,27 @@ export default function SignUp() {
         .then(res => res.json())
         .then((data) => {
             if(data.message === 'registered'){
-                alert(`you're already registered`);
+              alert(`someone already registered with this email. Please try with another email`);
             }
             else{
-                console.log(data);
+              // window.location.replace('/');
             }
         })
         .catch((err)=>{
             console.log(err);
         })
     }
+
+    const handleClick = () => {
+      setIsSignIn(!isSignIn);
+    }
+    useEffect(() => {
+      if(isSignIn){
+        document.getElementById('fullNameGrid').style.display = 'none';
+        document.getElementById('phoneNumGrid').style.display = 'none';
+      }
+    }, [isSignIn])
+    
 
   return (
     <ThemeProvider theme={theme}>
@@ -116,15 +128,15 @@ export default function SignUp() {
             alignItems: 'center',
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-            <LockOutlinedIcon />
+          <Avatar sx={{ m: 1, bgcolor: '' }}>
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign up
+            Sign {(isSignIn) ? 'In': 'Up'}
           </Typography>
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+            <Navbar name={values.FullName}/>
             <Grid container spacing={2}>
-              <Grid item xs={12}>
+              <Grid item xs={12}  id='fullNameGrid'>
                 <TextField
                   autoComplete="given-name"
                   name="fullName"
@@ -149,7 +161,7 @@ export default function SignUp() {
                   autoComplete="email"
                 />
               </Grid>
-              <Grid item xs={12}>
+              <Grid item xs={12} id='phoneNumGrid'>
                 <TextField
                   required
                   fullWidth
@@ -192,9 +204,12 @@ export default function SignUp() {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="#" variant="body2">
+                <Button
+                  type="button"
+                  onClick={handleClick}
+                >
                   Already have an account? Sign in
-                </Link>
+                </Button>
               </Grid>
             </Grid>
           </Box>
