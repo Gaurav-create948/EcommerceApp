@@ -7,6 +7,7 @@ function ProductDetail() {
   const { _id } = useParams();
   const [product, setProduct] = useState({});
 
+  // getting specific product that is clicked
   useEffect(() => {
     async function fetchData() {
       await fetch('http://localhost:5000/products', {
@@ -19,12 +20,12 @@ function ProductDetail() {
         .then(res => res.json())
         .then(data => {
           setProduct(data);
-          // console.log(data);
         })
         .catch(err => console.log(err));
     }
     fetchData();
   }, [])
+
 
   async function AddtoCart() {
     await fetch('http://localhost:5000/addToCart', {
@@ -38,13 +39,18 @@ function ProductDetail() {
     })
   }
 
+  // this is opening payment card
   function OpenPaymentPage(Data) {
+    // Data is the data of the order that has been created from the server.
+    // all options are getting initailized
     let options = {
       key: Data.keyId,
       amount: Data.data.amount,
       currency: Data.data.currency,
       name: "Company name",
-      order_id: Data.data.id,
+      order_id: Data.data.id, // order id
+
+      // handler function for successfull payment
       handler: function (response) {
         const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = response;
         fetch('http://localhost:5000/payment/verify', {
@@ -65,11 +71,14 @@ function ProductDetail() {
         })
       }
     };
+
+    // razorpay card
     var rzp1 = new window.Razorpay(options);
-    rzp1.open();
-    console.log(Data);
+    rzp1.open(); // opening the razorpay card
+    // console.log(Data);
   }
 
+  // This is creating the order instance in server backend
   async function payment() {
     const { price } = product;
     await fetch('http://localhost:5000/payment', {
@@ -102,7 +111,10 @@ function ProductDetail() {
           <Card.Body>
             <Card.Title>{product.title}</Card.Title>
             <Card.Text>Price : {product.price}</Card.Text>
+
+            {/* Buy now button check onClick function */}
             <Button type="submit" className="btn btn-lg" onClick={payment}>Buy Now</Button>
+            {/* Add to cart button check onClick function */}
             <Button type="submit" className="btn btn-lg" onClick={AddtoCart}>Add to Cart</Button>
           </Card.Body>
         </Col>
