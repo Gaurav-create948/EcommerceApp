@@ -2,9 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./Css/index.css";
 import App from "./App";
-import { Provider } from "./Context/Context";
-import reducer , { initialState} from "./Context/Reducer";
 import reportWebVitals from "./reportWebVitals";
+import UserDetails from "./Context/provider";
 
 /*
   React bootstrap configuration
@@ -15,9 +14,9 @@ import "../node_modules/bootstrap/dist/css/bootstrap.css";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   // <React.StrictMode>
-    <Provider initialState={initialState} reducer={reducer}>
-      <App />
-    </Provider>
+  <UserDetails>
+    <App />
+  </UserDetails>
   // </React.StrictMode>
 );
 

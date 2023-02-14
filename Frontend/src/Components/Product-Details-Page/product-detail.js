@@ -1,12 +1,13 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState , useContext } from "react";
 import { useParams, Link } from "react-router-dom";
 import "./products-detail.css";
 import { Container, Col, Row, Button, Card } from "react-bootstrap";
+import UserContext from "../../Context/Context";
 
 function ProductDetail() {
   const { _id } = useParams();
   const [product, setProduct] = useState({});
-
+  const a = useContext(UserContext);
   // getting specific product that is clicked
   useEffect(() => {
     async function fetchData() {
@@ -52,6 +53,7 @@ function ProductDetail() {
 
       // handler function for successfull payment
       handler: function (response) {
+        // console.log("this is response after a successfull payment", response);
         const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = response;
         fetch('http://localhost:5000/payment/verify', {
           method: 'POST',
@@ -65,6 +67,8 @@ function ProductDetail() {
         .then(res => res.json())
         .then((data) => {
           console.log(data);
+          // console.log(a.setOrders);
+          a.setOrders(product);
         })
         .catch((err) => {
           console.log(err);

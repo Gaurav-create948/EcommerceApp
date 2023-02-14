@@ -3,10 +3,10 @@ import { useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import SearchIcon from "@mui/icons-material/Search";
 import LocalMallIcon from "@mui/icons-material/LocalMall";
-import { useContextValue } from '../../Context/Context';
+import { UserContext } from '../../Context/Context';
 
 function Navbar(props) {
-  const[{basket}, dispatch] = useContextValue();
+  // const[{basket}, dispatch] = useContextValue();
   return (
     <div className="Navbar">
       <div className="logo">
@@ -43,7 +43,7 @@ function Navbar(props) {
             <Link to="/cart">
               <LocalMallIcon />
             </Link>
-            <span>{basket.length}</span>
+            <span>0</span>
           </li>
         </ul>
       </div>
