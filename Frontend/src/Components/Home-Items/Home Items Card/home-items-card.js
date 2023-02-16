@@ -12,6 +12,9 @@ import { useEffect, useState } from "react";
 import Navbar from "../../Navbar/Navbar";
 import { useContextValue } from "../../../Context/Context";
 
+// This is showing all the items on home page fetching data from backend
+
+
 function CreateCards(props) {
   const {_id, title, image, price } = props;
   return (

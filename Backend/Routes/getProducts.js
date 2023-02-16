@@ -11,7 +11,6 @@ app.get('/', (req, res) => {
     try {
         products.find(function(err, data){
             if(data){
-                res.cookie('rememberme', 'yes', {httpOnly: true, secure: true });
                 res.send(data);
             }
             else{

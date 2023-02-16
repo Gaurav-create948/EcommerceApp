@@ -105,17 +105,6 @@ export default function SignUp() {
         })
     }
 
-    const handleClick = () => {
-      setIsSignIn(!isSignIn);
-    }
-    useEffect(() => {
-      if(isSignIn){
-        document.getElementById('fullNameGrid').style.display = 'none';
-        document.getElementById('phoneNumGrid').style.display = 'none';
-      }
-    }, [isSignIn])
-    
-
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
@@ -131,7 +120,7 @@ export default function SignUp() {
           <Avatar sx={{ m: 1, bgcolor: '' }}>
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign {(isSignIn) ? 'In': 'Up'}
+            SignUp
           </Typography>
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Navbar name={values.FullName}/>
@@ -204,12 +193,14 @@ export default function SignUp() {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Button
+                {/* <Button
                   type="button"
                   onClick={handleClick}
                 >
                   Already have an account? Sign in
-                </Button>
+                </Button> */}
+
+              <Link to="/login">Already have an account? Sign in</Link>
               </Grid>
             </Grid>
           </Box>

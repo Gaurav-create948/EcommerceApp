@@ -8,22 +8,23 @@ const admin = {
     Password : "sonu@12345",
 }
 
-app.post('/', (req, res) => {
+app.post('/', async (req, res) => {
     const {Email, Password} = req.body;
     try {
-        User.findOne({Email, Password}, (err, found) => {
-            if(err){
-                res.json({message : err});
+        const customer = await User.findOne({Email, Password}).exec();
+        if(customer){
+            if(Email === admin.Email && Password === admin.Password){
+                // res.cookie('Admin', true, {httpOnly: true, secure: true });
+                res.json({code : 200, message : `Hello Admin I'll show you all the data`});
             }
             else{
-                if(Email === admin.Email && Password === admin.Password){
-                    res.json({message : `Hello Admin I'll show you all the data`});
-                }
-                else{
-                    res.json({message : `You're authorized i'll show you the data`});
-                }
+                // res.cookie('Login', true, {httpOnly: true, secure: true });
+                res.json({code : 200, message : `You're authorized i'll show you the data`});
             }
-        })
+        }
+        else{
+            res.json({code : 404, message : `User not found!`});
+        }
     } catch (error) {
         console.log(error);
     }
