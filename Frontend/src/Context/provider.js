@@ -1,11 +1,29 @@
 import UserContext from "./Context";
-import {userState, useState} from "react";
+import {useState} from "react";
 
-function userDetails({children}){
+function UserDetails({children}){
   const[user, setUser] = useState({
     FullName : String,
-  }) 
-  return <UserContext.Provider value={user}></UserContext.Provider>
+  })
+  let order = [];
+  function setOrders(Data){
+    order.push(Data);
+    console.log(order);
+  };
+  return <UserContext.Provider value={{user, setUser, order, setOrders}}>{children}</UserContext.Provider>
 }
 
-export default userDetails;
+export default UserDetails;
+
+
+
+// import {userState, useState} from "react";
+
+// function userDetails({children}){
+//   const[user, setUser] = useState({
+//     FullName : String,
+//   }) 
+//   return <UserContext.Provider value={user}></UserContext.Provider>
+// }
+
+// export default userDetails;

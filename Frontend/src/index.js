@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import "./Css/index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
+import UserDetails from "./Context/provider";
 
 /*
   React bootstrap configuration
@@ -13,7 +14,9 @@ import "../node_modules/bootstrap/dist/css/bootstrap.css";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   // <React.StrictMode>
-      <App />
+  <UserDetails>
+    <App />
+  </UserDetails>
   // </React.StrictMode>
 );
 
