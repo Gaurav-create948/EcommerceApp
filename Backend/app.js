@@ -24,7 +24,9 @@ app.use(express.json());
 app.use(urlencoded({extended:true}));
 app.use(cookieParser());
 // app.use(DB);
-// this is for sign in page backend;
+// this is for sign up page backend;
+app.use('/signup', register);
+// this is for log in page backend;
 app.use('/signin', register);
 // this is for showing up product.
 app.use('/products', products);

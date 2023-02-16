@@ -8,6 +8,7 @@ function ProductDetail() {
   const { _id } = useParams();
   const [product, setProduct] = useState({});
   const a = useContext(UserContext);
+
   // getting specific product that is clicked
   useEffect(() => {
     async function fetchData() {
@@ -59,7 +60,7 @@ function ProductDetail() {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
-          },
+          },  
           body: JSON.stringify({
             razorpay_order_id, razorpay_payment_id, razorpay_signature
           })

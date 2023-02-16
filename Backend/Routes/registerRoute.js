@@ -36,7 +36,7 @@ app.post('/', (req, res) => {
                     newUser.save()
                     .then(() => {
                         res.cookie('token' , authorized);
-                        res.json({message : 'saved'});
+                        res.json({message : FullName});
                     })
                     .catch(err => {
                         res.json({message : err});
