@@ -4,7 +4,8 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const JWT = require('jsonwebtoken');
 const { urlencoded, json } = require('express');
-const register = require('./Routes/registerRoute'); // signin page
+const register = require('./Routes/registerRoute'); // signup route.
+const login = require('./Routes/loginRoute'); // login route.
 const products = require('./Routes/getProducts'); // getting some products on the page.
 const payment = require('./Routes/razorpay-payment');
 const addToCart = require('./Routes/addToCart');
@@ -19,15 +20,20 @@ mongoose.connect("mongodb+srv://gaurav:xn1zAE87mwYLhJ7A@giftapp-cluster.noynvon.
 .catch(err => console.log(err));
 
 // included to get the body data
-app.use(cors());
+app.use(cors({
+    origin : 'http://localhost:3000',
+    credentials : true
+}));
 app.use(express.json());
 app.use(urlencoded({extended:true}));
 app.use(cookieParser());
 // app.use(DB);
+
+
 // this is for sign up page backend;
 app.use('/signup', register);
 // this is for log in page backend;
-app.use('/signin', register);
+app.use('/login', login);
 // this is for showing up product.
 app.use('/products', products);
 // this route is used for adding item to customer cart
@@ -46,16 +52,6 @@ app.get('/', (req, res) => {
     }
 })
 
-
-
-// app.get('/admin', (req, res) => {
-//     console.log(req);
-// })
-
-// app.post('/admin', (req, res) => {
-//     console.log(req.body);
-// })
-
-app.listen(5000, function(){
+app.listen("5000", function(){
     console.log('listening on port 5000');
 })

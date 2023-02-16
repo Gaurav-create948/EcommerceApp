@@ -6,7 +6,7 @@ const UserSchema = new mongoose.Schema({
     Email : String,
     Mobile : Number,
     Password : String,
-    Cart : new Array(0)
+    Cart : new Array()
 })  
 
 const User = mongoose.model('User' , UserSchema);

@@ -1,16 +1,17 @@
 const express = require('express');
 const app = express();
 const cookieParser = require('cookie-parser');
-const ProductModel = require('../Schemas/productSchema')
+const ProductModel = require('../Model/productSchema')
 const products = ProductModel;
 
 app.use(cookieParser());
 
+// sending all the products to the frontend.
 app.get('/', (req, res) => {
     try {
         products.find(function(err, data){
             if(data){
-                // res.cookie('test' , 'test1');
+                res.cookie('rememberme', 'yes', {httpOnly: true, secure: true });
                 res.send(data);
             }
             else{

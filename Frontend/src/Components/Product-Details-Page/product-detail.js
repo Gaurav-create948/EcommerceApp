@@ -7,6 +7,7 @@ function ProductDetail() {
   const { _id } = useParams();
   const [product, setProduct] = useState({});
 
+  // getting product with the particular id that user clicked.
   useEffect(() => {
     async function fetchData() {
       await fetch('http://localhost:5000/products', {
@@ -18,8 +19,7 @@ function ProductDetail() {
       })
       .then(res => res.json())
       .then(data => {
-        setProduct(data);
-        console.log(data);
+        setProduct(data); // this is the data of the product user clicked.
       })
       .catch(err => console.log(err));
       }
@@ -33,7 +33,7 @@ function ProductDetail() {
           'Content-Type' : 'application/json'
         },
         body : JSON.stringify({
-          _id
+          product
         })
       })
     }
