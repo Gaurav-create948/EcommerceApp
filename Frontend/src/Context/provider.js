@@ -1,9 +1,11 @@
 import UserContext from "./Context";
 import {useState} from "react";
+import Cookies from "js-cookie";
 
 function UserAuth({children}){
-  const[isLogin, setLogin] = useState(false);
-  return <UserContext.Provider value={{isLogin, setLogin}}>{children}</UserContext.Provider>
+  const [Cart , setCart] = useState([]);
+  console.log(Cart);
+  return <UserContext.Provider value={{Cart , setCart}}>{children}</UserContext.Provider>
 }
 
 export default UserAuth;

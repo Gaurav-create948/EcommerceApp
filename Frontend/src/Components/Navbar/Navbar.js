@@ -1,12 +1,13 @@
 import "./Navbar.css";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import SearchIcon from "@mui/icons-material/Search";
 import LocalMallIcon from "@mui/icons-material/LocalMall";
-import { UserContext } from '../../Context/Context';
+import UserContext  from '../../Context/Context';
+import Cookies from 'js-cookie';
 
 function Navbar(props) {
-  // const[{basket}, dispatch] = useContextValue();
+  const user = useContext(UserContext);
   return (
     <div className="Navbar">
       <div className="logo">
@@ -16,7 +17,7 @@ function Navbar(props) {
               {/* <h2> */}
               {/* <img src="../../images/logo1.png" width={"100%"}></img> */}
               djfdksj
-              {/* </h2> */}
+              {/* </h2> */} 
             </strong>
           }
         </Link>
@@ -43,9 +44,8 @@ function Navbar(props) {
           <li>
             <Link to="/cart">
               <LocalMallIcon />
-              Cart
+              <span>{user.Cart.length}</span>
             </Link>
-            <span>0</span>
           </li>
         </ul>
       </div>

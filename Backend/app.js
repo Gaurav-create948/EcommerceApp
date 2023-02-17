@@ -1,21 +1,22 @@
+require('dotenv').config()
 const express = require('express');
 const app = express();
 const cors = require('cors');
 const mongoose = require('mongoose');
-const JWT = require('jsonwebtoken');
-const { urlencoded, json } = require('express');
-const register = require('./Routes/registerRoute'); // signup route.
-const login = require('./Routes/loginRoute'); // login route.
+const { urlencoded } = require('express');
+const UserRoutes = require('./Routes/User');
 const products = require('./Routes/getProducts'); // getting some products on the page.
 const payment = require('./Routes/razorpay-payment');
 const addToCart = require('./Routes/addToCart');
 const cookieParser = require('cookie-parser');
+
 // const DB = require('./Routes/DB_CONNECT');
+
+// console.log("Priting", process.env.USERNAME)
+// mongoose.connect(`mongodb+srv://${process.env.username}:${process.env.passo}@giftapp-cluster.noynvon.mongodb.net/Gift-data?retryWrites=true&w=majority`, {useNewUrlParser:true, useUnifiedTopology:true})
+
 // connected mongodb here
-
-//xn1zAE87mwYLhJ7A
-
-mongoose.connect("mongodb+srv://gaurav:xn1zAE87mwYLhJ7A@giftapp-cluster.noynvon.mongodb.net/Gift-data?retryWrites=true&w=majority", {useNewUrlParser:true, useUnifiedTopology:true})
+mongoose.connect(`mongodb+srv://gaurav:xn1zAE87mwYLhJ7A@giftapp-cluster.noynvon.mongodb.net/Gift-data?retryWrites=true&w=majority`, {useNewUrlParser:true, useUnifiedTopology:true})
 .then(() => console.log('successful with mongodb'))
 .catch(err => console.log(err));
 
@@ -27,13 +28,12 @@ app.use(cors({
 app.use(express.json());
 app.use(urlencoded({extended:true}));
 app.use(cookieParser());
-// app.use(DB);
 
 
 // this is for sign up page backend;
-app.use('/signup', register);
+app.use('/', UserRoutes);
 // this is for log in page backend;
-app.use('/login', login);
+app.use('/', UserRoutes);
 // this is for showing up product.
 app.use('/products', products);
 // this route is used for adding item to customer cart

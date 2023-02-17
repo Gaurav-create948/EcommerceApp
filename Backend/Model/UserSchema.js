@@ -2,10 +2,22 @@ const mongoose = require('mongoose');
 
 // this is the schema for user first time register.
 const UserSchema = new mongoose.Schema({
-    FullName : String,
-    Email : String,
-    Mobile : Number,
-    Password : String,
+    FullName : {
+        type : String,
+        require : true
+    },
+    Email : {
+        type : String,
+        required : true
+    },
+    Mobile : {
+        type : Number,
+        required : true
+    },
+    Password : {
+        type : String,
+        required : true
+    },
     Cart : new Array()
 })  
 

@@ -38,8 +38,7 @@ export default function Login() {
         Email: String,
         Password: String
     });
-    const a = useContext(UserContext);
-
+    const UserCart = useContext(UserContext);
     function handleChange(event) {
         const { name, value } = event.target;
         setValues(prevValues => {
@@ -75,6 +74,10 @@ export default function Login() {
             .then((data) => {
                 if(data.code == 200){
                     Cookies.set('Login', true);
+                    UserCart.setCart(data.Cart);
+                }
+                else if(data.code == 501){
+                    Cookies.set('Admin', true);
                 }
             })
             .catch((err) => {
