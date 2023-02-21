@@ -1,43 +1,25 @@
 const express = require('express');
 const app = express();
 const cookieParser = require('cookie-parser');
-const ProductModel = require('../Schemas/productSchema')
-const products = ProductModel;
+const { getProducts, getProduct } = require('../Controller/fetchProducts');
 
 app.use(cookieParser());
 
-app.get('/', (req, res) => {
-    try {
-        products.find(function(err, data){
-            if(data){
-                // res.cookie('test' , 'test1');
-                res.send(data);
-            }
-            else{
-                res.json({message : err});
-            }
-        })
-    } catch (error) {
-        res.json({message : error});
-    }
-})
 
-app.post('/', (req, res) => {
-    // console.log(req.cookies);
+// protected route checking if the product id is provided then only going forward and finding data
+function isInput(req, res, next){
     const {_id} = req.body;
-    try {
-        products.findOne({_id}, function(err, data){
-            if(data){
-                res.json(data);
-            }
-            else{
-                res.json(err);
-            }
-        })
-    } catch (error) {
-        res.json({message : error});
+    if(!_id){
+        throw Error(404);
     }
-})
+    else{
+        next();
+    }
+}
+
+app.route('/')
+.get(getProducts)
+.post(isInput, getProduct)
 
 
 module.exports = app;

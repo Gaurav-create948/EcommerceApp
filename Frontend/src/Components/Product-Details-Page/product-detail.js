@@ -1,15 +1,17 @@
-import { useEffect, useState , useContext } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useParams, Link } from "react-router-dom";
 import "./products-detail.css";
+import Cookies from "js-cookie";
 import { Container, Col, Row, Button, Card } from "react-bootstrap";
 import UserContext from "../../Context/Context";
 
 function ProductDetail() {
   const { _id } = useParams();
   const [product, setProduct] = useState({});
-  const a = useContext(UserContext);
+  const user = useContext(UserContext);
+  const { isAuthenticated, Email } = user.userInfo;
 
-  // getting specific product that is clicked
+  // getting product with the particular id that user clicked.
   useEffect(() => {
     async function fetchData() {
       await fetch('http://localhost:5000/products', {
@@ -21,25 +23,37 @@ function ProductDetail() {
       })
         .then(res => res.json())
         .then(data => {
-          setProduct(data);
+          setProduct(data); // this is the data of the product user clicked.
         })
         .catch(err => console.log(err));
     }
     fetchData();
-  }, [])
-
+  })
 
   async function AddtoCart() {
-    await fetch('http://localhost:5000/addToCart', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        _id
-      })
-    })
-  }
+    if(isAuthenticated){
+      try {
+        await fetch('http://localhost:5000/addToCart', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            product, Email
+          })
+        })
+        .then(res => res.json())
+        .then(data => {
+          user.updateUserCart(data.Cart);
+        })
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    else{
+      window.location.replace('/login');
+    }
+  };
 
   // this is opening payment card
   function OpenPaymentPage(Data) {
@@ -60,20 +74,20 @@ function ProductDetail() {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
-          },  
+          },
           body: JSON.stringify({
             razorpay_order_id, razorpay_payment_id, razorpay_signature
           })
         })
-        .then(res => res.json())
-        .then((data) => {
-          console.log(data);
-          // console.log(a.setOrders);
-          a.setOrders(product);
-        })
-        .catch((err) => {
-          console.log(err);
-        })
+          .then(res => res.json())
+          .then((data) => {
+            console.log(data);
+            // console.log(a.setOrders);
+            // user.setOrders(product);
+          })
+          .catch((err) => {
+            console.log(err);
+          })
       }
     };
 
@@ -85,26 +99,31 @@ function ProductDetail() {
 
   // This is creating the order instance in server backend
   async function payment() {
-    const { price } = product;
-    await fetch('http://localhost:5000/payment', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        price
+    if(isAuthenticated){
+      const { price } = product;
+      await fetch('http://localhost:5000/payment', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          price
+        })
       })
-    })
-      .then(res => res.json())
-      .then((data) => {
-        // console.log(data);
-        OpenPaymentPage(data);
-      })
-      .catch((err) => {
-        console.log(err);
-      })
+        .then(res => res.json())
+        .then((data) => {
+          // console.log(data);
+          OpenPaymentPage(data);
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+    }
+    else{
+      window.location.replace('/login');
+    }
   }
-
+  
   return (
     <Container className="product-detail">
       <Row>

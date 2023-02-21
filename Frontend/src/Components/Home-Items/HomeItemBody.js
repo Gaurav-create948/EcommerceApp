@@ -11,7 +11,9 @@ function Item() {
     const [products, setProducts] = useState([]);
     useEffect(() => {
         async function fetchData(){
-            await fetch('http://localhost:5000/products')
+            await fetch('http://localhost:5000/products', {
+                credentials : "include"
+            })
             .then(res => res.json())
             .then(data =>{
                 setProducts(data);
@@ -19,7 +21,7 @@ function Item() {
             .catch(err => console.log(err))
         }
         fetchData();
-    })
+    }, [])
 
     return (
         <Container fluid>
