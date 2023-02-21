@@ -10,15 +10,9 @@ const payment = require('./Routes/razorpay-payment');
 const addToCart = require('./Routes/addToCart');
 const cookieParser = require('cookie-parser');
 
-// const DB = require('./Routes/DB_CONNECT');
-// mongoose.connect(`mongodb+srv://${process.env.username}:${process.env.passo}@giftapp-cluster.noynvon.mongodb.net/Gift-data?retryWrites=true&w=majority`, {useNewUrlParser:true, useUnifiedTopology:true})
-
 // connected mongodb here
-
 const DB_USERNAME = process.env.db_username;
 const DB_PASSWORD = process.env.db_password;
-
-// console.log('from app', process.env);
 
 mongoose.connect(`mongodb+srv://${DB_USERNAME}:${DB_PASSWORD}@giftapp-cluster.noynvon.mongodb.net/Gift-data?retryWrites=true&w=majority`, {useNewUrlParser:true, useUnifiedTopology:true})
 .then(() => console.log('successful with mongodb'))
