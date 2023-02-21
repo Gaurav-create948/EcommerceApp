@@ -1,6 +1,7 @@
 import './signup.css';
 import { useState, useEffect, useContext } from 'react';
 import * as React from 'react';
+import { Link } from "react-router-dom";
 import Cookies from "js-cookie";
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -8,7 +9,6 @@ import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -21,9 +21,9 @@ function Copyright(props) {
     return (
         <Typography variant="body2" color="text.secondary" align="center" {...props}>
             {'Copyright © '}
-            <Link color="inherit" href="https://mui.com/">
+            <a color="inherit" href="https://mui.com/">
                 Your Website
-            </Link>{' '}
+            </a>{' '}
             {new Date().getFullYear()}
             {'.'}
         </Typography>
@@ -70,14 +70,9 @@ export default function Login() {
                 Email, Password
             })
         })
-            .then(res => res.json())
-            .then((data) => {
-                if(data.code == 200){
-                    Cookies.set('Login', true);
-                    UserCart.setCart(data.Cart);
-                }
-                else if(data.code == 501){
-                    Cookies.set('Admin', true);
+            .then(res => {
+                if(res.status == 200){
+                    window.location.replace('/');
                 }
             })
             .catch((err) => {

@@ -4,20 +4,33 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import SearchIcon from "@mui/icons-material/Search";
 import LocalMallIcon from "@mui/icons-material/LocalMall";
 import UserContext  from '../../Context/Context';
-import Cookies from 'js-cookie';
+import { Button } from "react-bootstrap";
 
-function Navbar(props) {
+function Navbar() {
   const user = useContext(UserContext);
+  let cartLength = user.userInfo.Cart.length;
+  let isAuth = user.userInfo.isAuthenticated;
+  let Email = user.userInfo.Email;
+
+  async function handleClick(){
+    await fetch('http://localhost:5000/logout', {
+      credentials : "include"
+    })
+    .then(res => {
+      if(res.status == 200){
+        user.resetUserInfo();
+        window.location.replace('/');
+      }
+    })
+  }
+
   return (
     <div className="Navbar">
       <div className="logo">
         <Link to={"/"}>
           {
             <strong>
-              {/* <h2> */}
-              {/* <img src="../../images/logo1.png" width={"100%"}></img> */}
-              djfdksj
-              {/* </h2> */} 
+              Project
             </strong>
           }
         </Link>
@@ -33,19 +46,16 @@ function Navbar(props) {
       <div className="NavLinks">
         <ul className="ul-list">
           <li>
-            <Link to="/signup">Hello {props.name}</Link>
-          </li>
-          <li>
-            <Link to="/my-orders">Orders</Link>
-          </li>
-          <li>
-            <Link to='/admin'>Admin</Link>
+            <Link to="/signup">{(isAuth) ? Email : "signup"}</Link>
           </li>
           <li>
             <Link to="/cart">
               <LocalMallIcon />
-              <span>{user.Cart.length}</span>
+              <span>{cartLength}</span>
             </Link>
+          </li>
+          <li>
+            <Link to="#" style={(isAuth)?{display:"inline"}:{display:"none"}} onClick={handleClick}>Logout</Link>
           </li>
         </ul>
       </div>

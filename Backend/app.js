@@ -1,4 +1,4 @@
-require('dotenv').config()
+require('dotenv').config({path : './../../MY-APP/.env'})
 const express = require('express');
 const app = express();
 const cors = require('cors');
@@ -11,12 +11,16 @@ const addToCart = require('./Routes/addToCart');
 const cookieParser = require('cookie-parser');
 
 // const DB = require('./Routes/DB_CONNECT');
-
-// console.log("Priting", process.env.USERNAME)
 // mongoose.connect(`mongodb+srv://${process.env.username}:${process.env.passo}@giftapp-cluster.noynvon.mongodb.net/Gift-data?retryWrites=true&w=majority`, {useNewUrlParser:true, useUnifiedTopology:true})
 
 // connected mongodb here
-mongoose.connect(`mongodb+srv://gaurav:xn1zAE87mwYLhJ7A@giftapp-cluster.noynvon.mongodb.net/Gift-data?retryWrites=true&w=majority`, {useNewUrlParser:true, useUnifiedTopology:true})
+
+const DB_USERNAME = process.env.db_username;
+const DB_PASSWORD = process.env.db_password;
+
+// console.log('from app', process.env);
+
+mongoose.connect(`mongodb+srv://${DB_USERNAME}:${DB_PASSWORD}@giftapp-cluster.noynvon.mongodb.net/Gift-data?retryWrites=true&w=majority`, {useNewUrlParser:true, useUnifiedTopology:true})
 .then(() => console.log('successful with mongodb'))
 .catch(err => console.log(err));
 
@@ -33,6 +37,10 @@ app.use(cookieParser());
 // this is for sign up page backend;
 app.use('/', UserRoutes);
 // this is for log in page backend;
+app.use('/', UserRoutes);
+// this is for logout page backend;
+app.use('/', UserRoutes);
+// get user info if the cookie is set;
 app.use('/', UserRoutes);
 // this is for showing up product.
 app.use('/products', products);

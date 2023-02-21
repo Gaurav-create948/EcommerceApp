@@ -1,11 +1,30 @@
 import UserContext from "./Context";
 import {useState} from "react";
-import Cookies from "js-cookie";
 
 function UserAuth({children}){
-  const [Cart , setCart] = useState([]);
-  console.log(Cart);
-  return <UserContext.Provider value={{Cart , setCart}}>{children}</UserContext.Provider>
+  const [userInfo, setUserInfo] = useState({
+    isAuthenticated : false,
+    Email : String,
+    Cart : new Array()
+  });
+  function updateUserCart(newCart){
+    setUserInfo(prevValue => {
+      return{
+        isAuthenticated : prevValue.isAuthenticated,
+        Email : prevValue.Email,
+        Cart : newCart
+      }
+    })
+  }
+  function resetUserInfo(){
+    setUserInfo({
+      isAuthenticated : false,
+      Email : String,
+      Cart : new Array()
+    })
+  }
+  console.log(userInfo);
+  return <UserContext.Provider value={{userInfo, setUserInfo, updateUserCart, resetUserInfo}}>{children}</UserContext.Provider>
 }
 
 export default UserAuth;

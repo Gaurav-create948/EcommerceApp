@@ -12,10 +12,27 @@ import ProductsPage from './Components/Products-Page/products';
 import ProductDetail from './Components/Product-Details-Page/product-detail';
 import Checkout from './Components/Checkout/checkout';
 import TestPage from './testPage';
-import { useEffect, useState } from 'react';
+import { useEffect, useContext } from 'react';
+import UserContext from './Context/Context';
 
 
 function App() {
+  const user = useContext(UserContext);
+  useEffect(() => {
+    fetch("http://localhost:5000/", {
+      credentials : "include"
+    })
+    .then(res => res.json())
+    .then(response => {
+      // object -> Data -> Email ,  Cart
+      user.setUserInfo({
+        isAuthenticated : response.isAuthenticated,
+        Email : response.Data.Email,
+        Cart : response.Data.Cart
+      });
+    })
+  },[])
+
   return (
     <Router>
       <div>

@@ -1,13 +1,12 @@
 import './signup.css';
 import { useState, useEffect } from 'react';
-import * as React from 'react';
+import { Link } from "react-router-dom";
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -20,9 +19,9 @@ function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
+      <a color="inherit" href="https://mui.com/">
         Your Website
-      </Link>{' '}
+      </a>{' '}
       {new Date().getFullYear()}
       {'.'}
     </Typography>
@@ -33,77 +32,76 @@ const theme = createTheme();
 
 export default function SignUp() {
 
-    const [values, setValues] = useState({
-        FullName: String,
-        Email: String,
-        Phone: Number,
-        Password: String
+  const [values, setValues] = useState({
+    FullName: String,
+    Email: String,
+    Phone: Number,
+    Password: String
+  });
+
+  const [isSignIn, setIsSignIn] = useState(false);
+  function handleChange(event) {
+    const { name, value } = event.target;
+    setValues(prevValues => {
+      if (name === "fullName") {
+        return {
+          FullName: value,
+          Email: prevValues.Email,
+          Phone: prevValues.Phone,
+          Password: prevValues.Password
+        }
+      }
+      if (name === "email") {
+        return {
+          FullName: prevValues.FullName,
+          Email: value,
+          Phone: prevValues.Phone,
+          Password: prevValues.Password
+        }
+      }
+      if (name === "phone") {
+        return {
+          FullName: prevValues.FullName,
+          Email: prevValues.Email,
+          Phone: value,
+          Password: prevValues.Password
+        }
+      }
+      if (name === "password") {
+        return {
+          FullName: prevValues.FullName,
+          Email: prevValues.Email,
+          Phone: prevValues.Phone,
+          Password: value
+        }
+      }
     });
+  }
 
-    const [isSignIn, setIsSignIn] = useState(false);
-    function handleChange(event) {
-        const { name, value } = event.target;
-        setValues(prevValues => {
-            if (name === "fullName") {
-                return {
-                    FullName: value,
-                    Email: prevValues.Email,
-                    Phone: prevValues.Phone,
-                    Password: prevValues.Password
-                }
-            }
-            if (name === "email") {
-                return {
-                    FullName: prevValues.FullName,
-                    Email: value,
-                    Phone: prevValues.Phone,
-                    Password: prevValues.Password
-                }
-            }
-            if (name === "phone") {
-                return {
-                    FullName: prevValues.FullName,
-                    Email: prevValues.Email,
-                    Phone: value,
-                    Password: prevValues.Password
-                }
-            }
-            if (name === "password") {
-                return {
-                  FullName: prevValues.FullName,
-                  Email: prevValues.Email,
-                  Phone: prevValues.Phone,
-                  Password: value
-                }
-            }
-        });
-    }
-
-    async function handleSubmit(event){
-        event.preventDefault();
-        const{FullName, Email, Phone, Password} = values;
-        await fetch("http://localhost:5000/signup", {
-          method : "POST",
-            headers : {
-                'Content-type' : 'application/json'
-            },
-            body : JSON.stringify({
-                FullName, Email, Phone, Password
-            })
-        })
-        .then(res => res.json())
-        .then((data) => {
-            if(data.message === 'registered'){
-              alert(`someone already registered with this email. Please try with another email`);
-            }
-            else{
-              // window.location.replace('/');
-            }
-        })
-        .catch((err)=>{
-            console.log(err);
-        })
-    }
+  async function handleSubmit(event) {
+    event.preventDefault();
+    const { FullName, Email, Phone, Password } = values;
+    await fetch("http://localhost:5000/register", {
+      method: "POST",
+      headers: {
+        'Content-type': 'application/json'
+      },
+      body: JSON.stringify({
+        FullName, Email, Phone, Password
+      })
+    })
+      .then(res => {
+        if (res.status == 404) {
+          alert(`${Email} is already in use`);
+        }
+        else if (res.status == 200) {
+          window.location.replace('/login');
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -123,9 +121,9 @@ export default function SignUp() {
             SignUp
           </Typography>
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
-            <Navbar name={values.FullName}/>
+            <Navbar name={values.FullName} />
             <Grid container spacing={2}>
-              <Grid item xs={12}  id='fullNameGrid'>
+              <Grid item xs={12} id='fullNameGrid'>
                 <TextField
                   autoComplete="given-name"
                   name="fullName"
@@ -191,18 +189,12 @@ export default function SignUp() {
             >
               Sign Up
             </Button>
-            <Grid container justifyContent="flex-end">
+            <ul container justifyContent="flex-end">
               <Grid item>
-                {/* <Button
-                  type="button"
-                  onClick={handleClick}
-                >
-                  Already have an account? Sign in
-                </Button> */}
-
-              <Link to="/login">Already have an account? Sign in</Link>
+                  {/* <Link to="/login">Already have an account? Sign in</Link> */}
+                  <Link to={"/login"}>Already have an account? Login</Link>
               </Grid>
-            </Grid>
+            </ul>
           </Box>
         </Box>
         <Copyright sx={{ mt: 5 }} />
