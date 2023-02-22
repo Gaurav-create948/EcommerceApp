@@ -1,6 +1,7 @@
 require('dotenv').config({path : './../../MY-APP/.env'})
 const express = require('express');
 const app = express();
+const PORT = process.env.PORT || 5000;
 const cors = require('cors');
 const mongoose = require('mongoose');
 const { urlencoded } = require('express');
@@ -54,6 +55,6 @@ app.get('/', (req, res) => {
     }
 })
 
-app.listen("5000", function(){
+app.listen(PORT, function(){
     console.log('listening on port 5000');
 })
