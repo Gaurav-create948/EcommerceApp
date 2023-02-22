@@ -1,4 +1,3 @@
-// require('dotenv').config({path : './../MY-APP/.env'})
 const JWT = require('jsonwebtoken');
 const bycrypt = require('bcrypt');
 const privateKey = process.env.privateKey;

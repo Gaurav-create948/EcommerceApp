@@ -1,4 +1,3 @@
-require('dotenv').config({path : '../.env'})
 const crypto = require("crypto");
 const Razorpay = require('razorpay');
 const instance = new Razorpay({
